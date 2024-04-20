@@ -109,12 +109,17 @@ app.post('/alumnos', (req, res) => {
         res.status(201).json({ message: 'Se agrego correctamente.', alumno: nuevoAlumno });
     }
 })
-app.delete('/alumnos', (req, res) =>{
-    let dni = req.body.dni
-    
-}
+app.delete('/alumnos', (req, res) => {
 
-)
+    let alumnoEliminar = alumnosArray.find(alumno => alumno.dni == req.query.dni)
+    if (alumnoEliminar == null) {
+        res.status(404).send("Not Found");
+    } else {
+        alumnosArray.splice(alumnoEliminar)
+        res.status(200).send(`Se elimino al alumno con dni: ${alumnoEliminar.dni}`);
+    }
+
+})
 
 app.listen(port, () => {
 console.log(`Example app listening on port ${port}`)
